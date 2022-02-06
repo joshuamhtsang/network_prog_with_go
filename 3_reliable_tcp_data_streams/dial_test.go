@@ -16,8 +16,12 @@ func TestDial(t *testing.T) {
 
 	fmt.Printf("Listener Address is: %s", listener.Addr().String())
 
+	// Make a channel called 'done'.
 	done := make(chan struct{})
+
+	// Anonymous go function execution.
 	go func() {
+		// Add empty struct into 'done' channel.
 		defer func() { done <- struct{}{} }()
 
 		for {
@@ -27,7 +31,9 @@ func TestDial(t *testing.T) {
 				return
 			}
 
+			// Anonymous function takes a connection interface.
 			go func(c net.Conn) {
+				// Close the connection and add empty struct into 'done' channel.
 				defer func() {
 					c.Close()
 					done <- struct{}{}
