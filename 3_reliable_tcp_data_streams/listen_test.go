@@ -12,5 +12,5 @@ func TestListener(t *testing.T) {
 	}
 	defer func() { _ = listener.Close() }()
 
-	t.Logf("Bound to %q", listener.Addr())
+	t.Logf("Bound to %q", listener.Addr()) 
 }
