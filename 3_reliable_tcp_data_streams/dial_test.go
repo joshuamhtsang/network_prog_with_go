@@ -25,6 +25,8 @@ func TestDial(t *testing.T) {
 		defer func() { done <- struct{}{} }()
 
 		for {
+			// An implementation of Listing 3-2: a for loop to accept
+			// and handle incoming tcp connection requests.
 			conn, err := listener.Accept()
 			if err != nil {
 				t.Log(err)
@@ -39,8 +41,10 @@ func TestDial(t *testing.T) {
 					done <- struct{}{}
 				}()
 
+				// Create byte slice called 'buf'
 				buf := make([]byte, 1024)
 				for {
+					// Use net.Conn's Read() to read data from the connection.
 					n, err := c.Read(buf)
 					if err != nil {
 						if err != io.EOF {
@@ -56,6 +60,7 @@ func TestDial(t *testing.T) {
 
 	}()
 
+	// Dial to connect to the listener.
 	conn, err := net.Dial("tcp", listener.Addr().String())
 	if err != nil {
 		t.Fatal(err)
